@@ -1,0 +1,78 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load forms %}
+
+
+{% block main_content %}
+    {% if user.is_mechanic %}
+        <div class="form">
+        <h2>You are a mechanic!</h2>
+        <p>You cannot register cars! Just go and fix them!</p>
+    </div>
+    {% else %}
+    <!--THIS IS WHERE THE LOGIN FORM IS-->
+    <section id="register">
+        <div class="form">
+            <h2>Add a car</h2>
+            <form class="register-form" action="{% url 'add car' %}" method="post">
+                <div class="form-group">
+    {{ form.manufacturer.label_tag }}
+    {{ form.manufacturer|placeholder:'Enter the manufacturer made the car' }}
+    <div class="text-danger">
+        {% if form.manufacturer.errors %}
+            {{ form.manufacturer.errors.0 }}
+        {% endif %}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form.car_model.label_tag }}
+    {{ form.car_model|placeholder:'Enter the model of the car' }}
+    <div class="text-danger">
+        {% if form.car_model.errors %}
+            {{ form.car_model.errors.0 }}
+        {% endif %}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form.year.label_tag }}
+    {{ form.year|placeholder:'Enter the year that the car was made' }}
+    <div class="text-danger">
+        {% if form.year.errors %}
+            {{ form.year.errors.0 }}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="form-group">
+    {{ form.vin.label_tag }}
+    {{ form.vin|placeholder:'Enter the VIN number of the car' }}
+    <div class="text-danger">
+        {% if form.vin.errors %}
+            {{ form.vin.errors.0 }}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="form-group">
+    {{ form.problem_description.label_tag }}
+    {{ form.problem_description|placeholder:'Explain the problem of the car!' }}
+    <div class="text-danger">
+        {% if form.problem_description.errors %}
+            {{ form.problem_description.errors.0 }}
+        {% endif %}
+    </div>
+</div>
+                <input type="hidden" value="{{ next }}" name="next">
+                {% csrf_token %}
+
+                <button type="submit">Add the car</button>
+
+            </form>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

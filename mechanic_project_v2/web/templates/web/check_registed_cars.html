@@ -1,0 +1,63 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+    {% if user.is_mechanic %}
+        <div class="form">
+        <h2>You are a mechanic!</h2>
+        <p>You cannot register any cars!</p>
+    </div>
+    {% else %}
+
+    <div class="profile">
+        <div class="profile-data">
+            <div class="personal">
+                <div class="edit">
+                    <p>User: {{ user.username }}</p>
+                </div>
+
+                <p class="email">Email: {{ user.email }}</p>
+
+            </div>
+        </div>
+
+        <div class="check_registered_cars_customer">
+        <h2>Check Registered Cars</h2>
+        {% if cars %}
+            <ul class="unassigned-cars-list">
+                {% for car in cars %}
+                    <li class="unassigned-car">
+                        {{ car.manufacturer }} {{ car.car_model }} - {{ car.problem_description }}
+                        <div class="btn-group">
+                        <a href="{% url 'edit car' car.pk %}" class="btn btn-primary">Edit Car!</a>
+                        <a href="{% url 'delete car' car.pk %}" class="btn btn-secondery">Delete Car!</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                    <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages}}.
+            </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last
+            &raquo;</a>
+        {% endif %}
+            </span>
+            </div>
+            </ul>
+        {% else %}
+            <p>No registered cars.</p>
+        {% endif %}
+    </div>
+
+    </div>
+
+    {% endif %}
+
+{% endblock %}

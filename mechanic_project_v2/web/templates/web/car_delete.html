@@ -1,0 +1,14 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+    <div class="form">
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to remove the car: {{ object.manufacturer }} {{ object.car_model }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'registered cars' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

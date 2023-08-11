@@ -1,0 +1,40 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+    <div class="for_service">
+        <h2>Check Registered Cars</h2>
+        {% if unassigned_cars %}
+            <ul class="unassigned-cars-list">
+                {% for car in unassigned_cars %}
+                    <li class="unassigned-car">
+                        {{ car.manufacturer }} {{ car.car_model }} - {{ car.problem_description }}
+                        <div class="btn-group">
+                            <a href="{% url 'claim car' car.pk %}" class="btn btn-primary">Claim Car</a>
+                            <a href="{% url 'details for car' car.pk %}" class="btn btn-secondary">Details</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        {% else %}
+            <p>No cars for service.</p>
+        {% endif %}
+    </div>
+{% endblock %}

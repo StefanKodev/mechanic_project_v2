@@ -1,0 +1,34 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+<div class="for_service_details">
+    <h2>Car Details</h2>
+    <div class="car-info">
+        <p><strong>Manufacturer:</strong> {{ car.manufacturer }}</p>
+        <p><strong>Car Model:</strong> {{ car.car_model }}</p>
+        <p><strong>Car Year:</strong> {{ car.year }}</p>
+        <p><strong>Car VIN number:</strong> {{ car.vin }}</p>
+        <p><strong>Problem Description:</strong> {{ car.problem_description }}</p>
+        <!-- Add other car information here -->
+    </div>
+    <div class="owner-info">
+        <h3>Owner Information</h3>
+        {% if car.user.first_name and car.user.last_name %}
+            <p><strong>Name:</strong> {{ car.user.first_name }} {{ car.user.last_name }}</p>
+        {% endif %}
+        {% if car.user.email %}
+            <p><strong>Email:</strong> {{ car.user.email }}</p>
+        {% endif %}
+        <p><strong>Username:</strong> {{ car.user.username }}</p>
+    </div>
+    <div class="claim-car-button">
+        {% if not car.mechanic %}
+        <a href="{% url 'claim car' car.id %}" class="btn btn-success">Claim Car</a>
+        {% else %}
+        <a href="{% url 'confirm fix car' car.id %}" class="btn btn-success">Fix Car</a>
+        {% endif %}
+        <a href="{% url 'cars for service' %}" class="btn btn-success back-button">Back to Cars for Service</a>
+    </div>
+</div>
+{% endblock %}

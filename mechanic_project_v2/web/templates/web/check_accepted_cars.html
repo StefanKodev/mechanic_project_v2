@@ -1,0 +1,48 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+
+    {% if accepted_cars %}
+        <div class="for_service">
+    <h2>Accepted Cars</h2>
+        <ul class="unassigned-cars-list">
+            {% for car in page_obj %}
+            <li class="unassigned-car">
+                <p><strong>Car:</strong> {{ car.manufacturer }} {{ car.car_model }}</p>
+                <p><strong>Owner:</strong> {{ car.user.get_full_name }} ({{ car.user.username }})</p>
+                <p><strong>Problem:</strong> {{ car.problem_description }}</p>
+                <div class="btn-group">
+                <a href="{% url 'details for car' car.id %}" class="btn btn-primary">Details</a>
+                <a href="{% url 'confirm fix car' car.id %}" class="btn btn-success">Car is Fixed!</a>
+                <a href="{% url 'reject car' car.id %}?car_id={{ car.id }}" class="btn btn-danger">Reject Car</a>
+                </div>
+            </li>
+            {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages}}.
+            </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last
+            &raquo;</a>
+        {% endif %}
+            </span>
+            </div>
+        </ul>
+        </div>
+
+    {% else %}
+        <div class="for_service_details">
+            <h2>Accepted Cars</h2>
+        <p>No accepted cars at the moment.</p>
+        <a href="{% url 'cars for service' %}" class="btn btn-primary">Check Registered Cars</a>
+        </div>
+    {% endif %}
+{% endblock %}

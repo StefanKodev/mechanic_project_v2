@@ -1,0 +1,33 @@
+{% extends 'web/base.html' %}
+
+{% block main_content %}
+<div class="for_service_details">
+    <h2>Account Details</h2>
+    <div class="account-info">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        {% if user.first_name %}
+        <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+        {% endif %}
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+    <div class="account-type">
+        {% if user.is_mechanic %}
+        <p><strong>Account Type:</strong> Mechanic</p>
+            <div class="buttons">
+        <a href="{% url 'edit profile' %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'check accepted cars' %}" class="btn btn-primary">Check Accepted Cars</a>
+                <a href="{% url 'logout user' %}" class="btn btn-primary">Log Out</a>
+            <a href="{% url 'delete profile' %}" class="btn btn-primary">Delete Profile</a>
+            </div>
+        {% else %}
+        <p><strong>Account Type:</strong> Customer</p>
+            <div class="buttons">
+        <a href="{% url 'edit profile' %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'registered cars' %}" class="btn btn-primary">Check Registered Cars</a>
+                <a href="{% url 'logout user' %}" class="btn btn-primary">Log Out</a>
+            <a href="{% url 'delete profile' %}" class="btn btn-primary">Delete Profile</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block main_content %}
+
+        <!--THIS IS WHERE THE MAIN BLOCK-->
+    {% if not request.user.is_mechanic %}
+    <div class="main">
+
+        <div class="info">
+            <h2 class="info-title">
+                Who are we?
+            </h2>
+            <h3 class="info-subtitle">
+                We are a friendly car service,
+            </h3>
+            <p class="info-p">
+                filled with amazing mechanics,
+            </p>
+            <p class="info-p">
+                ready to fix your car no matter what!
+            </p>
+            <p>
+            <a href="{% url 'about page' %}">
+                More about us!
+            </a>
+            </p>
+        </div>
+
+        <div class="info">
+            <h2 class="info-title">
+                Check Prices!
+            </h2>
+            <h3 class="info-subtitle">
+                You can check the prices below!
+            </h3>
+            <p class="info-p">
+                Check the prices and register you car,
+            </p>
+            <p class="info-p">
+                and the problem you have!
+            </p>
+            <p>
+            <a href="{% url 'price page' %}">
+                Check Prices Now!
+            </a>
+            </p>
+        </div>
+
+        <div class="info">
+            <h2 class="info-title">
+                Register your car!
+            </h2>
+            {% if not request.user.is_authenticated %}
+            <h3 class="info-subtitle">
+                Make an account
+            </h3>
+            <p class="info-p">
+                and register your car
+            </p>
+            {% else %}
+            <h3 class="info-subtitle">
+                Register your car
+            </h3>
+            {% endif %}
+                    <p class="info-p">
+                and the problem it has.
+            </p>
+            <p>
+            <a href="{% url 'add car' %}">
+                Register car!
+            </a>
+            </p>
+        </div>
+
+</div>
+    <!--END OF MAIN BLOCK-->
+    {% else %}
+         <div class="main-page-for-mechanic">
+        <div class="main-title">
+            <h2 class="title">
+                Welcome mechanic
+            </h2>
+            <p class="subtitle">
+                {{ user.first_name }} {{ user.last_name }}
+            </p>
+        </div>
+        <div class="places">
+        <div class="card">
+            <h2 class="card-title">
+                Check Accepted Cars
+            </h2>
+            <p class="card-p">
+                Check all of your accepted cars and the details about them and go to work!
+            </p>
+            <a class="card-btn" href="{% url 'check accepted cars' %}">
+                Check Accepted Cars
+            </a>
+        </div>
+        <div class="card">
+            <h2 class="card-title">
+                Check Registered Cars
+            </h2>
+            <p class="card-p">
+                Check all of the cars that are registered and fix them!
+            </p>
+            <a class="card-btn" href="{% url 'cars for service' %}">
+                Check Registered Cars
+            </a>
+
+
+    {% endif %}
+
+
+{% endblock %}
